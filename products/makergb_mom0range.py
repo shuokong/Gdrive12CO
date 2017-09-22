@@ -52,17 +52,20 @@ vgreen = '(7.31,9.56)'
 vred = '(9.81,12.06)'
 #aplpy.make_rgb_cube(list(reversed(['mom0_28_37_12co_pix_2_tmb.fits', 'mom0_38_47_12co_pix_2_tmb.fits', 'mom0_48_57_12co_pix_2_tmb.fits'])), 'mom0_rgb_cube.fits')
 #aplpy.make_rgb_image('mom0_rgb_cube.fits', 'mom0_rgb_cube.png')
-#aplpy.rgb.sk_make_rgb_image(list(reversed(['mom0_28_37_12co_pix_2_tmb.fits', 'mom0_38_47_12co_pix_2_tmb.fits', 'mom0_48_57_12co_pix_2_tmb.fits'])), '12mom0range.png',str(vblue),str(vgreen),str(vred))
+aplpy.rgb.sk_make_rgb_image(list(reversed(['mom0_28_37_12co_pix_2_tmb.fits', 'mom0_38_47_12co_pix_2_tmb.fits', 'mom0_48_57_12co_pix_2_tmb.fits'])), '12mom0range1.pdf',str(vblue),str(vgreen),str(vred))
+sys.exit()
 
-ff = aplpy.FITSFigure('mom0_rgb_cube_2d.fits')
-#ff.set_theme('publication')
-ff.show_rgb('mom0_rgb_cube.png')
-ff.ticks.set_color('black')
+#ff = aplpy.FITSFigure('mom0_rgb_cube_2d.fits')
+ff = aplpy.FITSFigure('mom0_28_37_12co_pix_2_tmb.fits')
+ff.set_theme('publication')
+#ff.show_rgb('mom0_rgb_cube.png')
+ff.show_grayscale()
+#ff.ticks.set_color('black')
 ff.tick_labels.set_font(size=8)
 ff.add_label(83.6,-6.84,vblue,color='b')
 ff.add_label(83.6,-6.84-0.05,vgreen,color='g')
 ff.add_label(83.6,-6.84-0.05*2.,vred,color='r')
-pdfname = '12mom0range.pdf'
+pdfname = '12mom0range2.pdf'
 os.system('rm '+pdfname)
 plt.savefig(pdfname,bbox_inches='tight')
 os.system('open '+pdfname)
