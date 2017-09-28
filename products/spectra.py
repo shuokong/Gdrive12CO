@@ -41,10 +41,10 @@ def gaussian_fit(xdata,ydata,yerr,pinit): # xdata,ydata,yerr n-element arrays, p
      
     return mu,muErr,sigma,sigmaErr
 
-regionfiles = [['north_sen_gt2_12co_pix_2_Tmb.fits','north'],['central_sen_gt2_12co_pix_2_Tmb.fits','central'],['south_sen_gt2_12co_pix_2_Tmb.fits','south'],['furthersouth_sen_gt2_12co_pix_2_Tmb.fits','further south']]
+regionfiles = [['north_sen_gt2_12co_pix_2_Tmb.fits','north','north'],['central_sen_gt2_12co_pix_2_Tmb.fits','central','central'],['south_sen_gt2_12co_pix_2_Tmb.fits','south','south'],['furthersouth_sen_gt2_12co_pix_2_Tmb.fits','furthersouth','futher south']]
 
 for ii in regionfiles:
-    ff,region = ii
+    ff,fname,region = ii
     hdu1 = fits.open(ff)[0]
     crpix3 = hdu1.header['CRPIX3']
     cdelt3 = hdu1.header['CDELT3']
@@ -71,7 +71,7 @@ for ii in regionfiles:
     #h = plt.ylabel(r'$\rm \frac{d\tilde{N}}{\tilde{N}dlog(N/N_0)}$')
     #h.set_rotation(0)
     plt.xlabel(r'$v_{\rm LSR}\rm (km~s^{-1})$')
-    pdfname = 'averspec_'+region+'.pdf'
+    pdfname = 'averspec_'+fname+'.pdf'
     os.system('rm '+pdfname)
     plt.savefig(pdfname)
     os.system('open '+pdfname)
