@@ -43,13 +43,15 @@ def gaussian_fit(xdata,ydata,yerr,pinit): # xdata,ydata,yerr n-element arrays, p
 
 regionfiles = [['north_sen_gt2_12co_pix_2_Tmb.fits','north','north'],['central_sen_gt2_12co_pix_2_Tmb.fits','central','central'],['south_sen_gt2_12co_pix_2_Tmb.fits','south','south'],['furthersouth_sen_gt2_12co_pix_2_Tmb.fits','furthersouth','futher south']]
 
-for ii in regionfiles:
+p=plt.figure(figsize=(6,18))
+plt.subplots_adjust(top=0.99,bottom=0.03,left=0.11,right=0.97)
+p.subplots_adjust(hspace=0.001)
+for nn,ii in enumerate(regionfiles):
     ff,fname,region = ii
     hdu1 = fits.open(ff)[0]
     crpix3 = hdu1.header['CRPIX3']
     cdelt3 = hdu1.header['CDELT3']
     crval3 = hdu1.header['CRVAL3']
-    
     coldensdata = hdu1.data[0,:,:,:]
     print coldensdata.shape
     n1,n2,n3 = coldensdata.shape
@@ -57,24 +59,26 @@ for ii in regionfiles:
     print spectrum.shape
     velocity = [(crval3+cdelt3*((i+1)-crpix3))/1.e3 for i in range(n1)]
     #sys.exit()
-    
-    p=plt.figure(figsize=(7,6))
-    #plt.xscale('log') 
-    #plt.xlim(0.05,200.) 
-    #plt.yscale('log') 
-    plt.subplots_adjust(top=0.94,bottom=0.13,left=0.13,right=0.96)
-    ax=p.add_subplot(111)
+    ax=p.add_subplot(len(regionfiles),1,nn+1)
     ax.plot(velocity, spectrum, 'k-') 
-    ax.text(0.1, 0.9, region,horizontalalignment='center',verticalalignment='center',transform = ax.transAxes,fontsize=12) 
+    ax.tick_params(axis='both',which='both',direction='in',top='on')
+    ax.text(0.1, 0.9, region,horizontalalignment='left',verticalalignment='center',transform = ax.transAxes,fontsize=12) 
     #ax.vlines(3.*rmscoremass,1,1e4,linestyles='dotted') 
     plt.ylabel(r'$T_{\rm mb}\rm (K)$')
     #h = plt.ylabel(r'$\rm \frac{d\tilde{N}}{\tilde{N}dlog(N/N_0)}$')
     #h.set_rotation(0)
-    plt.xlabel(r'$v_{\rm LSR}\rm (km~s^{-1})$')
-    pdfname = 'averspec_'+fname+'.pdf'
-    os.system('rm '+pdfname)
-    plt.savefig(pdfname)
-    os.system('open '+pdfname)
-    os.system('cp '+pdfname+os.path.expandvars(' /Users/shuokong/GoogleDrive/imagesCARMAOrion/'))
-    plt.close(p)
+    if nn+1 < len(regionfiles):
+        plt.setp(ax.get_xticklabels(), visible=False)
+    else:
+        plt.xlabel(r'$v_{\rm LSR}\rm (km~s^{-1})$')
+    #plt.xscale('log') 
+    plt.xlim(0,20.) 
+    #plt.yscale('log') 
+
+pdfname = 'averspec.pdf'
+os.system('rm '+pdfname)
+plt.savefig(pdfname)
+os.system('open '+pdfname)
+os.system('cp '+pdfname+os.path.expandvars(' /Users/shuokong/GoogleDrive/imagesCARMAOrion/'))
+plt.close(p)
 
