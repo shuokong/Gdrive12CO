@@ -44,7 +44,7 @@ def gaussian_fit(xdata,ydata,yerr,pinit): # xdata,ydata,yerr n-element arrays, p
 regionfiles = [['north_sen_gt2_12co_pix_2_Tmb.fits','north','north'],['central_sen_gt2_12co_pix_2_Tmb.fits','central','central'],['south_sen_gt2_12co_pix_2_Tmb.fits','south','south'],['furthersouth_sen_gt2_12co_pix_2_Tmb.fits','furthersouth','futher south']]
 
 p=plt.figure(figsize=(6,18))
-plt.subplots_adjust(top=0.99,bottom=0.03,left=0.11,right=0.97)
+plt.subplots_adjust(top=0.98,bottom=0.03,left=0.11,right=0.97)
 p.subplots_adjust(hspace=0.001)
 for nn,ii in enumerate(regionfiles):
     ff,fname,region = ii
@@ -63,6 +63,8 @@ for nn,ii in enumerate(regionfiles):
     ax.plot(velocity, spectrum, 'k-') 
     ax.tick_params(axis='both',which='both',direction='in',top='on')
     ax.text(0.1, 0.9, region,horizontalalignment='left',verticalalignment='center',transform = ax.transAxes,fontsize=12) 
+    if nn+1 == 1:
+        plt.title(r'$^{12}$CO(1-0)')
     #ax.vlines(3.*rmscoremass,1,1e4,linestyles='dotted') 
     plt.ylabel(r'$T_{\rm mb}\rm (K)$')
     #h = plt.ylabel(r'$\rm \frac{d\tilde{N}}{\tilde{N}dlog(N/N_0)}$')
@@ -75,7 +77,7 @@ for nn,ii in enumerate(regionfiles):
     plt.xlim(0,20.) 
     #plt.yscale('log') 
 
-pdfname = 'averspec.pdf'
+pdfname = 'averspec12.pdf'
 os.system('rm '+pdfname)
 plt.savefig(pdfname)
 os.system('open '+pdfname)
