@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from astropy.io import fits
 import sys
 
-peak = 0
+peak = 1
 histogram = 0
 
 hdu1 = fits.open('peak_12co_pix_2_Tmb.fits')[0]
@@ -23,7 +23,7 @@ if peak == 1:
     ff.set_theme('publication')
     #ff.set_system_latex(True)
     maxcolor = np.nanmax(hdu1.data)
-    ff.show_colorscale(cmap='gist_heat', vmin=0, vmax=maxcolor, stretch='sqrt')
+    ff.show_colorscale(cmap='gist_heat', vmin=3, vmax=maxcolor, stretch='sqrt')
     ff.show_regions('olay.reg')
     #ff.show_contour(mask_hdu, levels=1, colors='yellow', linewidths=0.1)
     ff.add_colorbar() 

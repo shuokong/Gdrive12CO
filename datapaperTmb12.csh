@@ -1,13 +1,13 @@
 #!/bin/csh
 
 set images = 0
-set mom0 = 1
-set mom1three = 1
-set mom2three = 1
+set mom0 = 0
+set mom1three = 0
+set mom2three = 0
 set noisetype = "vary"
-set mom1five = 0
-set mom2five = 0
-set velocityrange = 1
+set mom1five = 1
+set mom2five = 1
+set velocityrange = 0
 
 ### Tpeak images for 12co
 if ($images) then
@@ -19,7 +19,7 @@ endif
 ### 0th-moment images for 12co
 if ($mom0) then
   rm -rf products/mom0_12co_pix_2_Tmb.mir
-  moment in=products/mask_12co_pix_2_Tmb.mir mom=0 out=products/mom0_12co_pix_2_Tmb.mir
+  moment in=products/mask_12co_pix_2_Tmb.mir mom=0 region="kms,images(0,17)" out=products/mom0_12co_pix_2_Tmb.mir
   fits in=products/mom0_12co_pix_2_Tmb.mir op=xyout out=products/mom0_12co_pix_2_Tmb.fits
 endif
 

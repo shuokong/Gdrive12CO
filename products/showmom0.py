@@ -6,8 +6,8 @@ from astropy.io import fits
 
 hdu1 = fits.open('mom0_12co_pix_2_Tmb.fits')[0]
 
-mom0 = 0
-histogram = 1
+mom0 = 1
+histogram = 0
 
 if mom0 == 1:
     xcenter=84
@@ -22,7 +22,6 @@ if mom0 == 1:
     ff.set_theme('publication')
     #ff.set_system_latex(True)
     maxcolor = np.nanmax(hdu1.data)
-    #maxcolor = 1000
     mincolor = 0.001
     ff.show_colorscale(cmap='gist_heat', vmin=mincolor, vmax=maxcolor, stretch='log')
     ff.show_regions('olay.reg')
