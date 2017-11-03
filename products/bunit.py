@@ -1,6 +1,6 @@
 import sys
 from astropy.io import fits
-hdu1 = fits.open('12co_pix_2_Tmb.fits')[0]
+hdu1 = fits.open('mask_12co_pix_2_Tmb.fits')[0]
 hdu1.header['BUNIT'] = 'K'
 #print hdu1.header
 #sys.exit()
