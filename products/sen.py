@@ -3,12 +3,12 @@ from astropy.io import fits
 import numpy as np
 from scipy import signal
 
-hdu1 = fits.open('mask_12co_pix_2_Tmb.fits')[0]
+hdu1 = fits.open('mask_imfit_12co_pix_2_Tmb.fits')[0]
 hdu2 = fits.open('combined_scalefactor_12co.sen.fits')[0]
 #hdu1.header['BUNIT'] = 'K'
 #print hdu1.header
 print hdu1.data.shape
-rmsdata = hdu1.data[0:1,:50,:,:]
+rmsdata = hdu1.data[0:1,:15,:,:]
 print hdu2.data.shape
 shape2 = hdu2.data.shape
 print rmsdata.shape
