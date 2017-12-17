@@ -16,25 +16,32 @@ if mom0 == 1:
     hei = 2.4
     xpanels = 1
     ypanels = 1
-    fig=plt.figure(figsize=(5*xpanels*1.1*(wid/(wid+hei))*10.,5*ypanels/1.1*(hei/(wid+hei))*10.))
+    fig=plt.figure(figsize=(3*xpanels*1.1*(wid/(wid+hei))*10.,3*ypanels/1.1*(hei/(wid+hei))*10.))
     ff = aplpy.FITSFigure(hdu1, figure=fig)
     ff.recenter(xcenter,ycenter,width=wid,height=hei) 
     ff.set_theme('publication')
     #ff.set_system_latex(True)
     maxcolor = np.nanmax(hdu1.data)
     mincolor = 0.001
-    ff.show_colorscale(cmap='gist_heat', vmin=mincolor, vmax=maxcolor, stretch='log')
-    ff.show_regions('olay.reg')
+    ff.show_colorscale(cmap='afmhot', pmin=0.25, vmax=1000, stretch='sqrt')
+    #ff.show_regions('olay.reg')
+    ff.show_regions('olay1.reg')
     #ff.show_contour(mask_hdu, levels=1, colors='yellow', linewidths=0.1)
     ff.add_colorbar() 
-    ff.colorbar.set_font(size=16)
+    ff.colorbar.set_font(size=12)
     ff.colorbar.set_pad(0.5)
-    ff.set_tick_labels_font(size='large')
-    ff.set_axis_labels_font(size='large')
-    #ff.add_scalebar(0.0115) # degree for 1pc at 5kpc
-    #ff.scalebar.set_corner('top right') 
-    #ff.scalebar.set_label('1 pc (41")') 
-    #ff.scalebar.set_font_size(16) 
+    ff.set_tick_labels_font(size=12)
+    ff.set_axis_labels_font(size=12)
+    ff.add_scalebar(0.286,corner='top left',pad=10) # degree for 2pc at 400 pc
+#    ff.scalebar.set_corner('left') 
+    ff.scalebar.set_label('2 pc') 
+    ff.scalebar.set_font_size(12) 
+    beamx = 83.41442439
+    beamy = -7.022846568
+    bmaj = hdu1.header['BMAJ']
+    bmin = hdu1.header['BMIN']
+    beamangle = hdu1.header['BPA'] 
+    ff.show_ellipses(beamx,beamy,bmaj,bmin,angle=beamangle-90,facecolor='black',edgecolor='black')
     #ff.tick_labels.set_xformat('dd')
     #ff.tick_labels.set_yformat('dd')
     ##
