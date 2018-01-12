@@ -23,6 +23,7 @@ if peak == 1:
     ff = aplpy.FITSFigure(hdu1)
     #ff.recenter(xcenter,ycenter,width=wid,height=hei) 
     ff.set_theme('publication')
+    ff.set_title('NRO45',fontsize=20)
     #ff.set_system_latex(True)
     maxcolor = np.nanmax(hdu1.data)
     ff.show_colorscale(cmap='gist_heat', vmin=0, vmax=maxcolor, stretch='sqrt')

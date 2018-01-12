@@ -1,12 +1,12 @@
 #!/bin/csh
 
 set images = 0
-set mom0 = 1
+set mom0 = 0
 set mom1three = 0
 set mom2three = 0
 set noisetype = "vary"
-set mom1five = 0
-set mom2five = 0
+set mom1five = 1
+set mom2five = 1
 set velocityrange = 0
 
 ### Tpeak images for 12co
