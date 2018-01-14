@@ -29,7 +29,7 @@ ff.set_tick_labels_font(size=12)
 ff.colorbar.set_axis_label_text('km s$^{-1}$')
 ff.colorbar.set_font(size=12)
 ff.set_axis_labels_font(size=12)
-ff.add_scalebar(0.286,corner='top left',pad=10) # degree for 2pc at 400 pc
+ff.add_scalebar(0.286,corner='bottom right',pad=10) # degree for 2pc at 400 pc
 ff.scalebar.set_label('2 pc') 
 ff.scalebar.set_font_size(12) 
 beamx = 83.41442439
@@ -38,7 +38,7 @@ bmaj = hdu1.header['BMAJ']
 bmin = hdu1.header['BMIN']
 beamangle = hdu1.header['BPA'] 
 ff.show_ellipses(beamx,beamy,bmaj,bmin,angle=beamangle-90,facecolor='black',edgecolor='black')
-ff.add_label(beamx+0.25,beamy+0.15,'2nd-moment $^{12}$CO(1-0)',fontsize=12)
+ff.add_label(beamx+1.0,beamy+2.0,'2nd-moment $^{12}$CO(1-0)',size=12,weight='bold')
 #ff.tick_labels.set_xformat('dd')
 #ff.tick_labels.set_yformat('dd')
 pdfname = 'mom2_12co_pix_2_Tmb.pdf'

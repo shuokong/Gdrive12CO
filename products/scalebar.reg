@@ -1,0 +1,8 @@
+# Region file format: DS9 version 4.1
+global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
+fk5
+# vector(5:35:17.951,-6:53:54.735,1031.038",4.2900216e-14) vector=0 color=black text={2 pc}
+# text(5:37:28.809,-4:57:40.983) textangle=359.99 color=black text={velocity-range 0th-moment 12CO(1-0)}
+# text(5:38:00.452,-4:59:56.911) textangle=359.99 color=red text={red: 9.8 - 12.1 km/s}
+# text(5:37:58.634,-5:02:04.226) textangle=359.99 text={green: 7.3 - 9.6 km/s}
+# text(5:38:01.077,-5:04:20.565) textangle=359.99 color=blue text={blue: 4.8 - 7.1 km/s}
