@@ -31,7 +31,6 @@ if mom0 == 1:
     ff.colorbar.set_font(size=12)
     ff.colorbar.set_pad(0.5)
     ff.colorbar.set_axis_label_text('K km s$^{-1}$')
-    ff.colorbar.set_font(size=12)
     ff.set_tick_labels_font(size=12)
     ff.set_axis_labels_font(size=12)
     ff.add_scalebar(0.286,corner='bottom right',pad=10) # degree for 2pc at 400 pc
