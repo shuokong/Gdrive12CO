@@ -46,13 +46,43 @@ if mom0 == 1:
     ff.add_label(beamx+1.0,beamy+2.0,'0th-moment $^{12}$CO(1-0)',size=12,weight='bold')
     #ff.tick_labels.set_xformat('dd')
     #ff.tick_labels.set_yformat('dd')
+    pos = ff._ax1.get_position() # image ratio
+    ffax1x0 = pos.x0
+    ffax1y0 = pos.y0
+    ffax1x1 = pos.x1
+    ffax1y1 = pos.y1
+    ffax1xc = (ffax1x0+ffax1x1)/2.
+    ffax1yc = (ffax1y0+ffax1y1)/2.
+    ffax1xfactor = wid/(ffax1x1-ffax1x0)
+    ffax1yfactor = hei/(ffax1y1-ffax1y0)
     ##
-    #f2 = aplpy.FITSFigure('hh222.fits', figure=fig, subplot=[0.65,0.32,0.1,0.1*(5*xpanels*1.1*(wid/(wid+hei))*10.)/(5*ypanels/1.1*(hei/(wid+hei))*10.)])
-    #f2.recenter(83.90765417,-6.42069,width=0.125,height=0.125)
-    #f2.show_grayscale()
-    #f2.axis_labels.hide()
-    #f2.tick_labels.hide()
-    #f2.ticks.hide()
+    boxcenterx = 83.95016414
+    boxcentery = -5.654848646
+    boxwidth = 0.2056964
+    boxheight = 0.3677828
+    ff.show_rectangles([boxcenterx],[boxcentery],width=boxwidth,height=boxheight,linestyles='dashed',color='k')
+    boxtopleftx = boxcenterx + boxwidth/2.
+    boxtoplefty = boxcentery + boxheight/2.
+    boxbottomleftx = boxcenterx + boxwidth/2.
+    boxbottomlefty = boxcentery - boxheight/2.
+    zoombottomleftx = 0.175
+    zoombottomlefty = 0.5
+    zoomwidth = 0.15
+    zoomheight = zoomwidth*wid/hei/boxwidth*boxheight
+    zoomtoprightx = (ffax1xc - (zoombottomleftx + zoomwidth)) * ffax1xfactor + xcenter
+    zoomtoprighty = ((zoombottomlefty + zoomheight) - ffax1yc) * ffax1yfactor + ycenter
+    zoombottomrightx = (ffax1xc - (zoombottomleftx + zoomwidth)) * ffax1xfactor + xcenter
+    zoombottomrighty = (zoombottomlefty - ffax1yc) * ffax1yfactor + ycenter
+    f2 = aplpy.FITSFigure(hdu1, figure=fig, subplot=[zoombottomleftx,zoombottomlefty,zoomwidth,zoomheight])
+    f2.set_theme('publication')
+    f2.recenter(boxcenterx,boxcentery,width=boxwidth,height=boxheight)
+    f2.show_colorscale(cmap='afmhot', vmin=30, vmax=600, stretch='log')
+    f2.axis_labels.hide()
+    f2.tick_labels.hide()
+    f2.ticks.hide()
+    f2.frame.set_color('black')
+    ff.show_lines([np.array([[boxtopleftx,zoomtoprightx],[boxtoplefty,zoomtoprighty]])],linestyles='dashed',color='k')
+    ff.show_lines([np.array([[boxbottomleftx,zoombottomrightx],[boxbottomlefty,zoombottomrighty]])],linestyles='dashed',color='k')
     ###
     pdfname = 'mom0_12co_pix_2_Tmb.pdf'
     os.system('rm '+pdfname)
