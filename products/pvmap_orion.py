@@ -27,6 +27,10 @@ def main():
     
     dec_list = np.concatenate([np.linspace(i,raw_dec_list[n+1],num=60,endpoint=False) for n,i in enumerate(raw_dec_list[:-1])])
 
+    #ra_list = np.array([83.75252857,83.79620141,83.82111418,83.84564682,83.86251383,83.86210348])
+    
+    #dec_list = np.array([-4.965857804,-4.99067018,-5.033833723,-5.076613716,-5.123974925,-5.173573767])
+
     print 'len(ra_list) == len(dec_list)', len(ra_list) == len(dec_list), ra_list, dec_list
 
     vel_range = [0,16] #kms
@@ -35,17 +39,20 @@ def main():
     
     mapa_maker = 'miriad'
     
-    beam_param = [8./3600.,8./3600.,0]
+    beam_param = [8.,8.,0]
     
     center_coord = [83.806,-5.368]
     
     
-    pvmap_orion = pv.pos_vel(name_cube,name_out,ra_list,dec_list,vel_range,vel_rms,mapa_maker,beam_param,center_coord)
+    #pvmap_orion = pv.pos_vel(name_cube,name_out,ra_list,dec_list,vel_range,vel_rms,mapa_maker,beam_param,center_coord)
     
     fig=plt.figure()
     gc=aplpy.FITSFigure(name_out,dimensions=[0,1],figure=fig,hdu=0)
     gc.show_colorscale(aspect='auto')
     
+    gc.ticks.set_xspacing(21.)
+    gc.ticks.set_minor_frequency(7)
+    gc.axis_labels.set_ytext('Velocity (km/s)')
     gc.ticks.show()
     gc.ticks.set_color('black')
     gc.ticks.set_length(10)

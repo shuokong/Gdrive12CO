@@ -48,7 +48,7 @@ def pos_vel(name_cube,name_out,ra_list,dec_list,vel_range,vel_rms,mapa_maker,bea
   vel_pos_map=np.zeros(shape=(len(vel_plot),len(dec_listpos)))
   vel_pos_map.fill(np.nan)
 
-  rms=list()
+  #rms=list()
   #maxmap=list()
   offsets_sum = 0. #np.zeros(len(ra_listpos))
 
@@ -73,13 +73,13 @@ def pos_vel(name_cube,name_out,ra_list,dec_list,vel_range,vel_rms,mapa_maker,bea
       dec_pos=rmod.find_nearest(dim2_arr,dec_listpos[index])
       print 'index,vel_i_ind,vel_f_ind',index,vel_i_ind,vel_f_ind
       vel_pos_map[:,index]=np.array(rmod.pos_to_spectrum(name_cube,[elem,dec_listpos[index]],mapa_maker,beam_param))[0][vel_i_ind:vel_f_ind]
-      rms.append(np.std(np.array(rmod.pos_to_spectrum(name_cube,[elem,dec_listpos[index]],mapa_maker,beam_param))[0][vel_i_rms:vel_f_rms]))
+      #rms.append(np.std(np.array(rmod.pos_to_spectrum(name_cube,[elem,dec_listpos[index]],mapa_maker,beam_param))[0][vel_i_rms:vel_f_rms]))
 
 
 
-  rms=np.array(rms)
+  #rms=np.array(rms)
 
-  rms_val=np.mean(rms)
+  #rms_val=np.mean(rms)
 
 
 
@@ -104,9 +104,9 @@ def pos_vel(name_cube,name_out,ra_list,dec_list,vel_range,vel_rms,mapa_maker,bea
   vel_pos_hdu.header.update(CRVAL1=offsets_sum*60.)
 
   vel_pos_hdu.header.update(CTYPE1='Offsets [arcmin]')
-  if np.isnan(rms_val):
-    rms_val=0.
-    print 'rms is nan'
+  #if np.isnan(rms_val):
+  #  rms_val=0.
+  #  print 'rms is nan'
   #if np.isnan(maxmap_val):
   #  maxmap_val=0.
   #  print 'maxmap_val is nan'

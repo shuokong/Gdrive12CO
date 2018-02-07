@@ -29,8 +29,8 @@ aspectratio=1.5
 xcenter=28.323
 ycenter=0.0675
 
-firstchannelstart=9
-lastchannel=80
+firstchannelstart=39
+lastchannel=50
 
 for startchan in range(firstchannelstart,lastchannel,ypanels*xpanels):
 
@@ -42,9 +42,9 @@ for startchan in range(firstchannelstart,lastchannel,ypanels*xpanels):
     for j in range(0,ypanels): # this order first follows row
         for i in range(0,xpanels):
             templatedata[0,0,:,:]=channeldata[0,currentchannel-1,:,:]
-            templatehdulist.writeto(fitsfiles['channel']['fname'].split('.')[0]+'_channel_'+str(currentchannel)+'.fits',output_verify='exception',clobber=True,checksum=False) # use this as template to output every single channel
+            templatehdulist.writeto('template_channel.fits',output_verify='exception',clobber=True,checksum=False) # use this as template to output every single channel
             subpos=[0.1+0.8/xpanels*i,0.1+0.9/ypanels*(ypanels-1-j),0.8/xpanels,0.9/ypanels]
-            ff = aplpy.FITSFigure(fitsfiles['channel']['fname'].split('.')[0]+'_channel_'+str(currentchannel)+'.fits',figure=fig,subplot=subpos)
+            ff = aplpy.FITSFigure('template_channel.fits',figure=fig,subplot=subpos)
             ff.set_theme('publication')
             mincolor = fitsfiles['channel']['mincolor']
             maxcolor = fitsfiles['channel']['maxcolor']
@@ -65,6 +65,7 @@ for startchan in range(firstchannelstart,lastchannel,ypanels*xpanels):
                 ff.hide_yaxis_label()
                 ff.hide_ytick_labels()
             currentchannel = currentchannel + 1
+            os.system('rm template_channel.fits')
     ax1 = fig.add_axes([0.92,0.7,0.01,0.9/ypanels])
     cmap = mpl.cm.afmhot
     norm = mpl.colors.Normalize(vmin=mincolor, vmax=maxcolor)
