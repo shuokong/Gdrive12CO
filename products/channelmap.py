@@ -31,6 +31,8 @@ ycenter=0.0675
 
 firstchannelstart=39
 lastchannel=50
+firstchannelstart=9
+lastchannel=81
 
 for startchan in range(firstchannelstart,lastchannel,ypanels*xpanels):
 
@@ -68,7 +70,8 @@ for startchan in range(firstchannelstart,lastchannel,ypanels*xpanels):
             os.system('rm template_channel.fits')
     ax1 = fig.add_axes([0.92,0.7,0.01,0.9/ypanels])
     cmap = mpl.cm.afmhot
-    norm = mpl.colors.Normalize(vmin=mincolor, vmax=maxcolor)
+#    norm = mpl.colors.Normalize(vmin=mincolor, vmax=maxcolor)
+    norm = mpl.colors.PowerNorm(gamma=0.5,vmin=mincolor, vmax=maxcolor)
     cb1 = mpl.colorbar.ColorbarBase(ax1, cmap=cmap,norm=norm,orientation='vertical')#,ticks=colorticks)
     
     # close and save file
