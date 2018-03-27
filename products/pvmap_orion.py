@@ -59,7 +59,8 @@ def main():
     gc.ticks.set_linewidth(2)
     gc.add_colorbar()
     gc.set_theme('publication')
-    gc.colorbar.set_width(0.5)
+    gc.colorbar.set_width(0.2)
+    gc.colorbar.set_axis_label_text('K')
     plt.savefig('pv12.pdf',bbox_inches='tight')
     #plt.show()
     
