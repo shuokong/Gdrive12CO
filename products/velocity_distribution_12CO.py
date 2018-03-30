@@ -44,7 +44,8 @@ def gaussian_fit(xdata,ydata,yerr,pinit): # xdata,ydata,yerr n-element arrays, p
     return mu,muErr,sigma,sigmaErr
 
 ########################
-corenums, xw, yw, corevelocities, coresnr = np.loadtxt('GAScores_12CO_peak_velocities.txt',usecols=(0,1,2,3,4),unpack=True)
+#corenums, xw, yw, corevelocities, coresnr = np.loadtxt('GAScores_12CO_peak_velocities.txt',usecols=(0,1,2,3,4),unpack=True)
+corenums, xw, yw, corevelocities, coresnr = np.loadtxt('Lane_cores_spectra/Getsources_cores_12CO_peak_velocities.txt',usecols=(0,1,2,3,4),unpack=True)
 ########################
 
 bins = np.linspace(2.25, 15.25, num=27) # evenly distributed in linear space

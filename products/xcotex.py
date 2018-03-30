@@ -17,10 +17,10 @@ lowi=19.0
 highi=22.0
 
 print 'reading fits files'
-hdulist1=pyfits.open('mom0_pixel6_convol18_mask_imfit_12co_pix_2_Tmb.fits')
-hdulist2=pyfits.open('stutz_on_12co_header.fits')
-hdulist3=pyfits.open('pixel6_convol18_tex12.fits')
-hdulist4=pyfits.open('stutz_on_12co_header.fits')
+hdulist1=pyfits.open('mom0_regrid_Stutz_convol18_mask_imfit_12co_pix_2_Tmb.fits')
+hdulist2=pyfits.open('carmanro_OrionA_all_spire250_nh_mask_corr_apex.fits')
+hdulist3=pyfits.open('regrid_Stutz_convol18_tex12.fits')
+hdulist4=pyfits.open('carmanro_OrionA_all_spire250_nh_mask_corr_apex.fits')
 print 'finish reading'
 
 print hdulist1[0].shape
@@ -35,6 +35,9 @@ av = nicest/9.4e20/2.
 hdulist1.close()
 hdulist2.close()
 hdulist3.close()
+
+hdulist4[0].data = nicest/mom012
+hdulist4.writeto('XCO.fits', output_verify='exception', clobber=True, checksum=False)
 
 log_tex=[]
 log_xco=[]
@@ -57,8 +60,6 @@ nan_log_xco = np.log10(nicest/mom012)
 nan_log_tex = np.log10(tex)
 log_xco = nan_log_xco[usedata]
 log_tex = nan_log_tex[usedata]
-hdulist4[0].data = nicest/mom012
-hdulist4.writeto('pixel6_convol18_XCO.fits', output_verify='exception', clobber=True, checksum=False)
 
 bintex=(hightex-lowtex)/10.
 binlowtex=lowtex
@@ -107,8 +108,7 @@ print 'saving files'
 os.system('rm xcotex.pdf')
 plt.savefig('xcotex.pdf',dpi=400)
 os.system('open xcotex.pdf')
-os.system('cp xcotex.pdf $DROPATH/LadaApJ/response1/f16b.pdf')
-os.system('cp xcotex.pdf $CALIPAPER/pre_submit/f16b.pdf')
+os.system('cp color_12co_NH_tex.pdf ~/GoogleDrive/imagesSFE/')
 #plt.show()
 
 
