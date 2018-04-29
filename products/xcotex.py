@@ -28,16 +28,48 @@ print hdulist2[0].shape
 print hdulist3[0].shape
 
 mom012=hdulist1[0].data[0,:,:]
+mom0rms = 1.5 # K km/s
 nicest=hdulist2[0].data[:,:]
-tex=hdulist3[0].data[0,:,:]
+meanxcousedata = (~np.isnan(mom012))&(nicest>0)&(mom012>3*mom0rms)
+tex=hdulist3[0].data[:,:]
 av = nicest/9.4e20/2.
+
+print 'average NH',np.nanmean(nicest[meanxcousedata]),'average mom0',np.nanmean(mom012[meanxcousedata]),'mean Xco',np.nanmean(nicest[meanxcousedata])/np.nanmean(mom012[meanxcousedata])
 
 hdulist1.close()
 hdulist2.close()
 hdulist3.close()
 
+rawxco = nicest/mom012
 hdulist4[0].data = nicest/mom012
+hdulist4[0].data[~meanxcousedata] = np.nan
 hdulist4.writeto('XCO.fits', output_verify='exception', clobber=True, checksum=False)
+print 'nanmin XCO',np.nanmin(hdulist4[0].data),'nanmax XCO',np.nanmax(hdulist4[0].data),'nanmedian XCO',np.nanmedian(hdulist4[0].data)
+
+def plothist(data,pdfname):
+    xx = data[~np.isnan(data)]
+    #xx = xxx[xxx<1.e2]
+    x = xx[xx>0]
+    p=plt.figure(figsize=(7,6))
+    fig, ax = plt.subplots(1,1)
+    # the histogram of the data
+    n, bins, patches = plt.hist(x, 100, histtype='step', color='k')
+    #print n,bins
+    #plt.xscale('log')
+    #plt.yscale('log')
+    plt.xlabel(r'$X_{\rm CO}~({\rm cm}^{-2}~{\rm (K~km~s^{-1})}^{-1})$')
+    plt.ylabel('counts')
+    plt.xlim(0,4.e20)
+    plt.grid(True)
+    #pdfname = 'mom1_13co_hist.pdf'
+    os.system('rm '+pdfname)
+    plt.savefig(pdfname,bbox_inches='tight')
+    os.system('open '+pdfname)
+    os.system('cp '+pdfname+os.path.expandvars(' /Users/shuokong/GoogleDrive/imagesSFE/'))
+    return len(x),len(xx)
+pixnum = plothist(hdulist4[0].data,'hist_XCO.pdf')
+
+sys.exit()
 
 log_tex=[]
 log_xco=[]

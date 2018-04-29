@@ -15,12 +15,10 @@ rms=0.16
 lowrms=3
 highrms=5
 lowav=0
-highav=800*2.*9.4e20
-zoomhighav=200*2.*9.4e20
+highav=200*2.*9.4e20
 avthres=7.5
 lowi=0
-highi=2000
-zoomhighi=1000
+highi=1000
 standardwav=3.3
 
 print 'reading fits files'
@@ -91,15 +89,13 @@ plt.yscale('linear')
 plt.scatter(merge3avv,merge3inn,s=5,c=merge3tee,marker="o",edgecolors='none',rasterized=True)
 plt.xlim(lowav,highav)
 plt.ylim(lowi,highi)
-plt.vlines(zoomhighav,lowi,zoomhighi,linestyles='dashed')
-plt.hlines(zoomhighi,lowav,zoomhighav,linestyles='dashed')
 ### linear fit
 #linarray=(merge3avv[:]<highav) & (merge3avv[:]>lowav+2) & (merge3inn>rms*lowrms)
 #linresul=stats.linregress(merge3avv[linarray[:]],merge3inn[linarray[:]])
 #plt.plot(merge3avv[linarray[:]],linresul[0]*merge3avv[linarray[:]]+linresul[1],'k-',label='fitted slope: '+str("{0:.1f}".format(linresul[0]))+', r-value: '+str("{0:.2f}".format(linresul[2])),rasterized=True)
 ##
 #plt.plot(standard38,standardw,'r-')
-plt.text(0.05, 0.95,'(a)',horizontalalignment='left',verticalalignment='top',transform = ax.transAxes)
+plt.text(0.05, 0.95,'(b)',horizontalalignment='left',verticalalignment='top',transform = ax.transAxes)
 #plt.legend(loc=1,frameon=False,prop={'size':16})
 #plt.tick_params(axis='both', which='major', labelsize=28)
 box = ax.get_position()
@@ -121,10 +117,10 @@ ax2.set_xbound(ax.get_xbound())
 ax2.set_xticklabels(ax2Xs)
 ax2.set_xlabel(r'$\rm A_V~(mag)$')
 
-os.system('rm color_12co_NH_tex.pdf')
-plt.savefig('color_12co_NH_tex.pdf',dpi=400)
-os.system('open color_12co_NH_tex.pdf')
-os.system('cp color_12co_NH_tex.pdf ~/GoogleDrive/imagesSFE/')
+os.system('rm zoomin_color_12co_NH_tex.pdf')
+plt.savefig('zoomin_color_12co_NH_tex.pdf',dpi=400)
+os.system('open zoomin_color_12co_NH_tex.pdf')
+os.system('cp zoomin_color_12co_NH_tex.pdf ~/GoogleDrive/imagesSFE/')
 #plt.show()
 
 
