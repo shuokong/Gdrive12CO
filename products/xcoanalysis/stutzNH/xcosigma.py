@@ -11,15 +11,15 @@ import pyfits
 import statistics_calculation as sc
 from scipy import stats
 
-lowtex=math.log(10,10)
-hightex=math.log(250,10)
+lowtex=math.log(0.1,10)
+hightex=math.log(10,10)
 lowi=19.0
 highi=22.0
 
 print 'reading fits files'
 hdulist1=pyfits.open('mom0_regrid_Stutz_convol18_mask_imfit_12co_pix_2_Tmb.fits')
 hdulist2=pyfits.open('carmanro_OrionA_all_spire250_nh_mask_corr_apex.fits')
-hdulist3=pyfits.open('regrid_Stutz_convol18_tex12.fits')
+hdulist3=pyfits.open('mom2_regrid_Stutz_convol18_mask_imfit_12co_pix_2_Tmb.fits')
 hdulist4=pyfits.open('carmanro_OrionA_all_spire250_nh_mask_corr_apex.fits')
 print 'finish reading'
 
@@ -31,7 +31,7 @@ mom012=hdulist1[0].data[0,:,:]
 mom0rms = 1.5 # K km/s
 nicest=hdulist2[0].data[:,:]
 meanxcousedata = (~np.isnan(mom012))&(nicest>0)&(mom012>3*mom0rms)
-tex=hdulist3[0].data[:,:]
+tex=hdulist3[0].data[0,:,:]
 av = nicest/9.4e20/2.
 
 print 'average NH',np.nanmean(nicest[meanxcousedata]),'average mom0',np.nanmean(mom012[meanxcousedata]),'mean Xco',np.nanmean(nicest[meanxcousedata])/np.nanmean(mom012[meanxcousedata])
@@ -43,7 +43,7 @@ hdulist3.close()
 rawxco = nicest/mom012
 hdulist4[0].data = nicest/mom012
 hdulist4[0].data[~meanxcousedata] = np.nan
-hdulist4.writeto('XCO.fits', output_verify='exception', clobber=True, checksum=False)
+#hdulist4.writeto('XCO.fits', output_verify='exception', clobber=True, checksum=False)
 print 'nanmin XCO',np.nanmin(hdulist4[0].data),'nanmax XCO',np.nanmax(hdulist4[0].data),'nanmedian XCO',np.nanmedian(hdulist4[0].data)
 
 def plothist(data,pdfname):
@@ -69,8 +69,6 @@ def plothist(data,pdfname):
     return len(x),len(xx)
 #pixnum = plothist(hdulist4[0].data,'hist_XCO.pdf')
 
-#sys.exit()
-
 log_tex=[]
 log_xco=[]
 
@@ -93,7 +91,7 @@ usedata = (nan_log_tex>lowtex) & (nan_log_tex<hightex) & (~np.isnan(nan_log_tex)
 log_xco = nan_log_xco[usedata]
 log_tex = nan_log_tex[usedata]
 print 'FITTING nanmin XCO',np.nanmin(10**log_xco),'nanmax XCO',np.nanmax(10**log_xco),'nanmedian XCO',np.nanmedian(10**log_xco)
-print 'FITTING nanmin Tex',np.nanmin(10**log_tex),'nanmax Tex',np.nanmax(10**log_tex),'nanmedian Tex',np.nanmedian(10**log_tex)
+print 'FITTING nanmin sigma',np.nanmin(10**log_tex),'nanmax sigma',np.nanmax(10**log_tex),'nanmedian sigma',np.nanmedian(10**log_tex)
 
 bintex=(hightex-lowtex)/10.
 binlowtex=lowtex
@@ -124,7 +122,7 @@ ax1.plot(xx,yy,'b-',linewidth=3,zorder=5)
 # end fit
 ax1.set_ylim(lowi,highi)
 ax1.set_xlim(lowtex,hightex)
-ax1.set_xlabel(r'$\rm log(T_{ex}~(K))$')
+ax1.set_xlabel(r'$\rm log(T_{d}~(K))$')
 ax1.set_ylabel(r'$\rm log(X_{CO}~(cm^{-2}~(K~km~s^{-1})^{-1}))$')
 ax2=ax1.twiny()
 ax1Xs = ax1.get_xticks()
@@ -134,15 +132,15 @@ for X in ax1Xs:
 ax2.set_xticks(ax1Xs)
 ax2.set_xbound(ax1.get_xbound())
 ax2.set_xticklabels(ax2Xs)
-ax2.set_xlabel(r'$\rm T_{ex}~(K)$')
+ax2.set_xlabel(r'$\rm T_{d}~(K)$')
 
 print 'finish plotting'
 
 print 'saving files'
-os.system('rm xcotex.pdf')
-plt.savefig('xcotex.pdf',dpi=400)
-os.system('open xcotex.pdf')
-os.system('cp xcotex.pdf ~/GoogleDrive/imagesSFE/')
+os.system('rm xcosigma.pdf')
+plt.savefig('xcosigma.pdf',dpi=400)
+os.system('open xcosigma.pdf')
+os.system('cp xcosigma.pdf ~/GoogleDrive/imagesSFE/')
 #plt.show()
 
 

@@ -21,9 +21,15 @@ from astropy.utils.data import get_pkg_data_filename
 #array, footprint = reproject_exact(hdu2, hdu1.header)
 #fits.writeto('lombardi_colorTerror_on_12co_header.fits', array, hdu1.header, clobber=True)
 
-hdu1 = fits.open('carmanro_OrionA_all_spire250_nh_mask_corr_apex.fits')[0]
-hdu2 = fits.open('../../OrionAdust/lombardi_planck_herschel_plane3_colorT.fits')[0]
-from reproject import reproject_exact
-array, footprint = reproject_exact(hdu2, hdu1.header)
-fits.writeto('lombardi_colorT_on_Stutz_header.fits', array, hdu1.header, clobber=True)
+#hdu1 = fits.open('carmanro_OrionA_all_spire250_nh_mask_corr_apex.fits')[0]
+#hdu2 = fits.open('../../OrionAdust/lombardi_planck_herschel_plane3_colorT.fits')[0]
+#from reproject import reproject_interp
+#array, footprint = reproject_interp(hdu2, hdu1.header)
+#fits.writeto('lombardi_colorT_on_Stutz_header.fits', array, hdu1.header, clobber=True)
+
+hdu1 = fits.open('xcoanalysis/stutzNH/carmanro_OrionA_all_spire250_nh_mask_corr_apex.fits')[0]
+hdu2 = fits.open('../../OrionAdust/herschelAmelia/OrionA-all_conv500_temp.fits')[0]
+from reproject import reproject_interp
+array, footprint = reproject_interp(hdu2, hdu1.header)
+fits.writeto('xcoanalysis/stutzNH/Stutz_Tdust_carmanro.fits', array, hdu1.header, clobber=True)
 
