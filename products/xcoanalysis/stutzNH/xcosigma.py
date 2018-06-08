@@ -87,7 +87,7 @@ log_xco=[]
 
 nan_log_xco = np.log10(nicest/mom012)
 nan_log_tex = np.log10(tex)
-usedata = (nan_log_tex>lowtex) & (nan_log_tex<hightex) & (~np.isnan(nan_log_tex)) & (~np.isnan(nan_log_xco)) & (av>3)
+usedata = (nan_log_tex>lowtex) & (nan_log_tex<hightex) & (~np.isnan(nan_log_tex)) & (~np.isnan(nan_log_xco)) & (av>0)
 log_xco = nan_log_xco[usedata]
 log_tex = nan_log_tex[usedata]
 print 'FITTING nanmin XCO',np.nanmin(10**log_xco),'nanmax XCO',np.nanmax(10**log_xco),'nanmedian XCO',np.nanmedian(10**log_xco)
@@ -100,29 +100,29 @@ binxtex,binytex,yerrtex=sc.sk_bin(bintex,binlowtex,binhightex+bintex,log_tex,log
 
 print 'plotting'
 p=plt.figure(figsize=(7,6))
-plt.subplots_adjust(top=0.88,bottom=0.12,left=0.15,right=0.97)
+plt.subplots_adjust(top=0.88,bottom=0.12,left=0.15,right=0.95)
 
 ax1=p.add_subplot(111)
-plt.text(0.05, 0.95,'(b)',horizontalalignment='center',verticalalignment='center',transform = ax1.transAxes)
+#ax1.text(0.05, 0.95,'(b)',horizontalalignment='center',verticalalignment='center',transform = ax1.transAxes)
 ax1.plot(log_tex,log_xco,'k.',zorder=1,markersize=5,rasterized=True)
-ax1.errorbar(binxtex,binytex,yerr=yerrtex,fmt='b.',markersize=7,barsabove=True,zorder=3,elinewidth=1.5,markeredgewidth=1.5,capsize=3)
+#ax1.errorbar(binxtex,binytex,yerr=yerrtex,fmt='b.',markersize=7,barsabove=True,zorder=3,elinewidth=1.5,markeredgewidth=1.5,capsize=3)
 # fit
 ## unbinned
 slope, intercept, r_value, p_value, std_err = stats.linregress(log_tex,log_xco)
 print slope,intercept,r_value
 xx=np.arange(lowtex,hightex+bintex,bintex)
 yy=xx*slope+intercept
-ax1.plot(xx,yy,'r-',linewidth=3,zorder=5)
+#ax1.plot(xx,yy,'r-',linewidth=3,zorder=5)
 ## binned
 slope, intercept, r_value, p_value, std_err = stats.linregress(binxtex,binytex)
 print slope,intercept,r_value
 xx=np.arange(lowtex,hightex+bintex,bintex)
 yy=xx*slope+intercept
-ax1.plot(xx,yy,'b-',linewidth=3,zorder=5)
+#ax1.plot(xx,yy,'b-',linewidth=3,zorder=5)
 # end fit
 ax1.set_ylim(lowi,highi)
 ax1.set_xlim(lowtex,hightex)
-ax1.set_xlabel(r'$\rm log(T_{d}~(K))$')
+ax1.set_xlabel(r'$\rm log(\sigma_{^{12}CO}~(km~s^{-1}))$')
 ax1.set_ylabel(r'$\rm log(X_{CO}~(cm^{-2}~(K~km~s^{-1})^{-1}))$')
 ax2=ax1.twiny()
 ax1Xs = ax1.get_xticks()
@@ -132,7 +132,7 @@ for X in ax1Xs:
 ax2.set_xticks(ax1Xs)
 ax2.set_xbound(ax1.get_xbound())
 ax2.set_xticklabels(ax2Xs)
-ax2.set_xlabel(r'$\rm T_{d}~(K)$')
+ax2.set_xlabel(r'$\rm \sigma_{^{12}CO}~(km~s^{-1})$')
 
 print 'finish plotting'
 

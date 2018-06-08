@@ -11,7 +11,7 @@ import pyfits
 import statistics_calculation as sc
 from scipy import stats
 
-lowtex=math.log(10,10)
+lowtex=math.log(5,10)
 hightex=math.log(250,10)
 lowi=19.0
 highi=22.0
@@ -89,7 +89,7 @@ log_xco=[]
 
 nan_log_xco = np.log10(nicest/mom012)
 nan_log_tex = np.log10(tex)
-usedata = (nan_log_tex>lowtex) & (nan_log_tex<hightex) & (~np.isnan(nan_log_tex)) & (~np.isnan(nan_log_xco)) & (av>3)
+usedata = (nan_log_tex>lowtex) & (nan_log_tex<hightex) & (~np.isnan(nan_log_tex)) & (~np.isnan(nan_log_xco)) & (av>0)
 log_xco = nan_log_xco[usedata]
 log_tex = nan_log_tex[usedata]
 print 'FITTING nanmin XCO',np.nanmin(10**log_xco),'nanmax XCO',np.nanmax(10**log_xco),'nanmedian XCO',np.nanmedian(10**log_xco)
@@ -102,25 +102,25 @@ binxtex,binytex,yerrtex=sc.sk_bin(bintex,binlowtex,binhightex+bintex,log_tex,log
 
 print 'plotting'
 p=plt.figure(figsize=(7,6))
-plt.subplots_adjust(top=0.88,bottom=0.12,left=0.15,right=0.97)
+plt.subplots_adjust(top=0.88,bottom=0.12,left=0.15,right=0.95)
 
 ax1=p.add_subplot(111)
-plt.text(0.05, 0.95,'(b)',horizontalalignment='center',verticalalignment='center',transform = ax1.transAxes)
+#ax1.text(0.05, 0.95,'(b)',horizontalalignment='center',verticalalignment='center',transform = ax1.transAxes)
 ax1.plot(log_tex,log_xco,'k.',zorder=1,markersize=5,rasterized=True)
-ax1.errorbar(binxtex,binytex,yerr=yerrtex,fmt='b.',markersize=7,barsabove=True,zorder=3,elinewidth=1.5,markeredgewidth=1.5,capsize=3)
+#ax1.errorbar(binxtex,binytex,yerr=yerrtex,fmt='b.',markersize=7,barsabove=True,zorder=3,elinewidth=1.5,markeredgewidth=1.5,capsize=3)
 # fit
 ## unbinned
 slope, intercept, r_value, p_value, std_err = stats.linregress(log_tex,log_xco)
 print slope,intercept,r_value
 xx=np.arange(lowtex,hightex+bintex,bintex)
 yy=xx*slope+intercept
-ax1.plot(xx,yy,'r-',linewidth=3,zorder=5)
+#ax1.plot(xx,yy,'r-',linewidth=3,zorder=5)
 ## binned
 slope, intercept, r_value, p_value, std_err = stats.linregress(binxtex,binytex)
 print slope,intercept,r_value
 xx=np.arange(lowtex,hightex+bintex,bintex)
 yy=xx*slope+intercept
-ax1.plot(xx,yy,'b-',linewidth=3,zorder=5)
+#ax1.plot(xx,yy,'b-',linewidth=3,zorder=5)
 # end fit
 ax1.set_ylim(lowi,highi)
 ax1.set_xlim(lowtex,hightex)
