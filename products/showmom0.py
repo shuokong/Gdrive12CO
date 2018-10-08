@@ -14,9 +14,19 @@ distan = [((center_coord[0]-i)**2+(center_coord[1]-pvdec[n])**2)**0.5 for n,i in
 refind = np.argmin(distan)
 
 hdu1 = fits.open('mom0_12co_pix_2_Tmb.fits')[0]
+hdu2 = fits.open('mask_mom0_12co_CARMAonly_wider.fits')[0]
 
-mom0 = 1
+mom0mask = 1
+mom0 = 0
 histogram = 0
+
+if mom0mask == 1:
+    hdu1.data[~np.isnan(hdu1.data)] = 1
+    hdu1.data[np.isnan(hdu1.data)] = 0
+    fits.writeto('12mom0mask.fits', hdu1.data, hdu1.header, clobber=True)
+    hdu2.data[~np.isnan(hdu2.data)] = 1
+    hdu2.data[np.isnan(hdu2.data)] = 0
+    fits.writeto('12CARMAonly_mom0mask.fits', hdu2.data, hdu2.header, clobber=True)
 
 if mom0 == 1:
     xcenter=84
